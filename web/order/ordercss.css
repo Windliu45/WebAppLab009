@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.container .p1 {
+	float: left;
+	
+}
+
+.container .p2 {
+	
+	float: right;
+}
