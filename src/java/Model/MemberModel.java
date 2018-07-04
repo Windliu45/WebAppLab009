@@ -7,6 +7,7 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -15,6 +16,7 @@ import java.sql.Statement;
  * @author user
  */
 public class MemberModel {
+
     String id;
     String email;
     String pwd;
@@ -47,7 +49,7 @@ public class MemberModel {
         this.add_2 = add_2;
         this.add_3 = add_3;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -151,43 +153,69 @@ public class MemberModel {
     public void setAdd_3(String add_3) {
         this.add_3 = add_3;
     }
-    
-    
+
     public String AddMember() {
-         
-       String resultString ="Not work";
-         String connectionUrl = "jdbc:sqlserver://CR3-11;databaseName=Project;user=sa;password=12345";  
 
-      Connection con = null;  
-      Statement stmt = null;  
-      ResultSet rs = null;  
-      
-      try {  
-         // Establish the connection.  
-         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
-         con = DriverManager.getConnection(connectionUrl);  
+        String resultString = "Not work";
+        String connectionUrl = "jdbc:sqlserver://CR3-11;databaseName=Project;user=sa;password=12345";
 
-         String SQL = "INSERT INTO member VALUES('"+id+"','"+email+"','"+pwd+"','"+first_name+"','"+last_name+"','"+birthday+"','"+registered_day+"','"+sex+"','"+camp+"','"+phone+"','"+add_1+"','"+add_2+"','"+add_3+"')";
+        Connection con = null;
+        //     Statement stmt = null;  
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-         stmt = con.createStatement();  
-         rs = stmt.executeQuery(SQL);  
-        
+        try {
+            // Establish the connection.  
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(connectionUrl);
 
+//         String SQL = "INSERT INTO member VALUES('"+id+"','"+email+"','"+pwd+"','"+first_name+"','"+last_name+"','"+birthday+"','"+registered_day+"','"+sex+"','"+camp+"','"+phone+"','"+add_1+"','"+add_2+"','"+add_3+"')";
+            String SQL = "INSERT INTO member VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, id);
+            pstmt.setString(2, email);
+            pstmt.setString(3, pwd);
+            pstmt.setString(4, first_name);
+            pstmt.setString(5, last_name);
+            pstmt.setString(6, birthday);
+            pstmt.setString(7, registered_day);
+            pstmt.setString(8, sex);
+            pstmt.setString(9, camp);
+            pstmt.setString(10, phone);
+            pstmt.setString(11, add_1);
+            pstmt.setString(12, add_2);
+            pstmt.setString(13, add_3);
+            rs = pstmt.executeQuery();
+
+//         stmt = con.createStatement();  
+//         rs = stmt.executeQuery(SQL);  
             con.close();
+        } //      // Handle any errors that may have occurred.  
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (Exception e) {
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                }
+            }
         }
-//      // Handle any errors that may have occurred.  
-      catch (Exception e) {  
-         e.printStackTrace();  
-      }  
-      finally {  
-         if (rs != null) try { rs.close(); } catch(Exception e) {}  
-         if (stmt != null) try { stmt.close(); } catch(Exception e) {}  
-         if (con != null) try { con.close(); } catch(Exception e) {}  
-      }  
-         
-       
-         return resultString;
-     }
-   
-    
+
+        return resultString;
+    }
+
 }
