@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : login
     Created on : 2018/6/25, 下午 02:20:55
@@ -19,7 +20,7 @@
             <form action="ApplicationControl">
 
                 <table width="500px" border="1">
-                    <tbody>
+                   <tbody>
                         <tr>
                             <td width="150px">User Name&nbsp;</td>
                             <td width="350px"><input type="text" name="user" value="" size="30px" />&nbsp;</td>
