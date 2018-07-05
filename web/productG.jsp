@@ -57,9 +57,11 @@
                         <p>${item[4]}</p>
                         <p>   ${item[2]}</p>
                         <form action="UpdateCarController">
-                            <input type="hidden" name="pgid" value="${item[0]}" />
-                            <input type="hidden" name="price" value="" />
-                        <p><input type="text" name="quantity" value="0"" size="5" />  <input type="submit" value="加入購物車" /> </p>
+                            <input type="hidden" name="operation" value="insert" />
+                            <input type="hidden" name="pn" value="${item[0]}" />
+                            <input type="hidden" name="price" value="${item[2]}" />
+                            <input type="hidden" name="pnname" value="${item[4]}" />
+                        <p><input type="text" name="sulian" value="1" size="5" />  <input type="submit" value="加入購物車" /> </p>
                         </form>
                     </div>  
                 </C:forEach>
